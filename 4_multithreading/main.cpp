@@ -1,5 +1,10 @@
+#include<algorithm>
 #include<thread>
-#include<bits/stdc++.h>
+#include<iostream>
+#include<string.h>
+#include<vector>
+#include<cmath>
+#include<numeric>
 
 using namespace std;
 
@@ -79,7 +84,7 @@ void display_statistics()
     cout << "The total number of elements are " << c_nums << endl;
 }
 
-int main()
+int main(int argc,  char** argv)
 {
     nums = input_nums();
 
@@ -92,12 +97,15 @@ int main()
     thread t6(count_nums);
 
     // Display PIDs for the worker threads
-    cout << "PID for thread 1 - average: " << t1.get_id() << endl;
-    cout << "PID for thread 2 - min: " << t2.get_id() << endl;
-    cout << "PID for thread 3 - max: " << t3.get_id() << endl;
-    cout << "PID for thread 4 - median: " << t4.get_id() << endl;
-    cout << "PID for thread 5 - standard deviation: " << t5.get_id() << endl;
-    cout << "PID for thread 6 - count elements: " << t6.get_id() << endl;
+    if (argc > 1 && strcmp(argv[1], "print_pids") == 0)
+    {
+        cout << "PID for thread 1 - average: " << t1.get_id() << endl;
+        cout << "PID for thread 2 - min: " << t2.get_id() << endl;
+        cout << "PID for thread 3 - max: " << t3.get_id() << endl;
+        cout << "PID for thread 4 - median: " << t4.get_id() << endl;
+        cout << "PID for thread 5 - standard deviation: " << t5.get_id() << endl;
+        cout << "PID for thread 6 - count elements: " << t6.get_id() << endl;
+    }
 
     // Waiting for all threads to complete exectution
     t1.join();
