@@ -3,7 +3,10 @@
 
 using namespace std;
 
-void display(vector<int> nums)
+int maximum, minimum;
+float average;
+
+void display(vector<int> &nums)
 {
     for(vector<int>::iterator it = nums.begin(); it != nums.end(); ++it)
         cout << *it << " ";
@@ -26,23 +29,26 @@ vector<int> input_nums()
     return nums;
 }
 
-void avg(vector<int> nums)
+void avg(vector<int> &nums)
 {
-    float avg;
-    avg = accumulate(nums.begin(), nums.end(), 0)/nums.size();
-    cout << "The average is " << avg << endl;
+    average = accumulate(nums.begin(), nums.end(), 0)/nums.size();
 }
 
-void max(vector<int> nums)
+void max(vector<int> &nums)
 {
-    int max = *max_element(nums.begin(), nums.end());
-    cout << "The max element is " << max << endl;
+    maximum = *max_element(nums.begin(), nums.end());
 }
 
-void min(vector<int> nums)
+void min(vector<int> &nums)
 {
-    int min = *min_element(nums.begin(), nums.end());
-    cout << "The min element is " << min << endl;
+    minimum = *min_element(nums.begin(), nums.end());
+}
+
+void display_statistics()
+{
+    cout << "The average is " << average << endl;
+    cout << "The min element is " << minimum << endl;
+    cout << "The max element is " << maximum << endl;
 }
 
 int main()
