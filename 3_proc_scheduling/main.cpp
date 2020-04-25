@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -61,8 +62,6 @@ class FCFS
 
     void setup() {
         sort(modified_processes.begin(), modified_processes.end(), compare);
-        for(int i=0; i<5; i++) cout<<modified_processes[i].pid<<" ";
-        cout<<endl;
     }
 
     void getWaitingTimes(vector<int> &waiting_times) {
@@ -103,8 +102,6 @@ class Priority
 
         void setup() {
             sort(modified_processes.begin(), modified_processes.end(), compare);
-            for(int i=0; i<5; i++) cout<<modified_processes[i].pid<<" ";
-            cout<<endl;
         }
 
         void getWaitingTimes(vector<int> &waiting_times) {
@@ -125,6 +122,179 @@ class Priority
             turnaround_times[i] = waiting_times[i] + modified_processes[i].burst_time;
         }
 
+};
+
+class RoundRobin
+{
+    private:
+        vector<Process> processes;
+        vector<Process> modified_processes;
+
+    public:
+        int quantum_time;
+        RoundRobin(vector<Process> &processes, int quantum_time) {
+            copy(processes.begin(), processes.end(), back_inserter(this->processes));
+            copy(processes.begin(), processes.end(), back_inserter(this->modified_processes));
+            this->quantum_time = quantum_time;
+        }
+
+        static bool compare(Process p1, Process p2) {
+            if(p1.arrival_time != p2.arrival_time) return p1.arrival_time < p2.arrival_time;
+            else p1.pid < p2.pid;
+        }
+
+        void setup() {
+            sort(modified_processes.begin(), modified_processes.end(), compare);
+        }
+
+        void getCompletionTime(vector<int> &completion_time) {
+            this->setup();
+            queue<Process> q;
+            int t = 0;
+            vector<int> compl_time;
+            int quant_rem = quantum_time;
+            bool flag = true;
+            while(flag) {
+                queue<Process> temp_q;
+                for(auto p : modified_processes) {
+                    if(p.arrival_time == t) {
+                        temp_q.push(p);
+                    }
+                }
+                if(!q.empty()) {
+                    Process *current_execution = &q.front();
+                    if(current_execution->burst_time >= quantum_time) {
+                        current_execution->burst_time -= 1;
+                        quant_rem -= 1;
+                        if(quant_rem == 0) {
+                            q.pop();
+                            q.push(*current_execution);
+                            quant_rem = quantum_time;
+                        }
+                    } else {
+                        current_execution->burst_time -= 1;
+                        if(current_execution->burst_time == 0) {
+                            quant_rem = quantum_time;
+                            compl_time.push_back(t);
+                            q.pop();
+                        }
+                    }
+                }
+                while(!temp_q.empty()) {
+                    q.push(temp_q.front());
+                    temp_q.pop();
+                }
+                t += 1;
+                if(compl_time.size() == modified_processes.size()) flag=false;
+            }
+            copy(compl_time.begin(), compl_time.end(), back_inserter(completion_time));
+        }
+};
+
+class SJFNP
+{
+    private:
+        vector<Process> processes;
+        vector<Process> modified_processes;
+    public:
+        SJFNP(vector<Process> &processes) {
+            copy(processes.begin(), processes.end(), back_inserter(this->processes));
+            copy(processes.begin(), processes.end(), back_inserter(this->modified_processes));
+        }
+
+        static bool compare(Process p1, Process p2) {
+            if(p1.arrival_time == p2.arrival_time) return p1.burst_time < p2.burst_time;
+            else return p1.arrival_time < p2.arrival_time;
+        }
+
+        static bool compare_burst(Process p1, Process p2) {
+            if(p1.burst_time == p2.burst_time) return p1.arrival_time < p2.arrival_time;
+            else return p1.burst_time < p2.burst_time;
+        }
+
+        void setup() {
+            sort(modified_processes.begin(), modified_processes.end(), compare);
+        }
+
+        void getCompletionTime(vector<int> &completion_times) {
+            this->setup();
+            vector<Process> q;
+            int t = 0;
+            vector<int> compl_times;
+            bool flag = true;
+            while(flag) {
+                t += 1;
+                for(auto p: modified_processes) {
+                    if(p.arrival_time == t) q.push_back(p);
+                }
+                if(!q.empty()) {
+                    sort(q.begin(), q.end(), compare_burst);
+                    for(int i=t+1;i<t+q.front().burst_time;i++){
+                        for(auto p: modified_processes) {
+                            if(p.arrival_time == i) q.push_back(p);
+                        }
+                    }
+                    t += (q.front().burst_time);
+                    compl_times.push_back(t);
+                    t -= 1;
+                    q.erase(q.begin());
+                }
+                if(compl_times.size() == processes.size()) flag = false;
+            }
+            
+            copy(compl_times.begin(), compl_times.end(), back_inserter(completion_times));
+        }
+};
+
+class SJFP
+{
+    private:
+        vector<Process> processes;
+        vector<Process> modified_processes;
+    public:
+        SJFP(vector<Process> &processes) {
+            copy(processes.begin(), processes.end(), back_inserter(this->processes));
+            copy(processes.begin(), processes.end(), back_inserter(this->modified_processes));
+        }
+
+        static bool compare(Process p1, Process p2) {
+            if(p1.arrival_time == p2.arrival_time) return p1.burst_time < p2.burst_time;
+            else return p1.arrival_time < p2.arrival_time;
+        }
+
+        static bool compare_burst(Process p1, Process p2) {
+            if(p1.burst_time == p2.burst_time) return p1.arrival_time < p2.arrival_time;
+            else return p1.burst_time < p2.burst_time;
+        }
+
+        void setup() {
+            sort(modified_processes.begin(), modified_processes.end(), compare);
+        }
+
+        void getCompletionTime(vector<int> &completion_times) {
+            this->setup();
+            vector<Process> q;
+            int t = 0;
+            vector<int> compl_times;
+            bool flag = true;
+            while(flag) {
+                for(auto p: modified_processes) {
+                    if(p.arrival_time == t) q.push_back(p);
+                }
+                if(!q.empty()) {
+                    sort(q.begin(), q.end(), compare_burst);
+                    Process current_process = q.front();
+                    q.front().burst_time -= 1;
+                    if(q.front().burst_time == 0) {
+                        compl_times.push_back(t+1);
+                        q.erase(q.begin());
+                    }
+                }   
+                t += 1;
+                if(compl_times.size() == processes.size()) flag = false;
+            }
+            copy(compl_times.begin(), compl_times.end(), back_inserter(completion_times));
+        }
 };
 
 
@@ -154,6 +324,22 @@ int main() {
     for(int i=0; i<5; i++) cout<<turnaround_times_p[i]<<" ";
     cout<<endl;
 
+    RoundRobin rr(processes, 2);
+    vector<int> completion_time_r;
+    rr.getCompletionTime(completion_time_r);
+    for(auto i: completion_time_r) cout<<"C: "<<i<<" ";
+    cout<<endl;
 
+    SJFNP snp(processes);
+    vector<int> completion_time_np;
+    snp.getCompletionTime(completion_time_np);
+    for(auto i: completion_time_np) cout<<i<<" ";
+    cout<<endl;
+
+    SJFP sp(processes);
+    vector<int> completion_time;
+    sp.getCompletionTime(completion_time);
+    for(auto i: completion_time) cout<<i<<" ";
+    cout<<endl;
     return 0;
 }
