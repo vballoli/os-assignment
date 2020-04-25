@@ -5,7 +5,7 @@ Write two programs, i.e., Program1.c, and Program2.c that communicate with each 
 
 ## Running instructions
 * Open two terminals and navigate to the base folder '2_ipc'.
-* In terminal 1, run the following command ```g++ -pipe -O2 -std=c++14 Program1.cpp -lm -o P1```.
-* In terminal 2, run the following command ```g++ -pipe -O2 -std=c++14 Program2.cpp -lm -o P2```.
+* In terminal 1, run the following command ```g++ -pipe -O2 -std=c++14 Program1.cpp -lm -o P1 && ./P1```.
+* In terminal 2, run the following command ```g++ -pipe -O2 -std=c++14 Program2.cpp -lm -o P2 && ./P2```.
 * Follow the instructions as shown in the terminal.
 * To quit the program, press 'q'.
