@@ -43,6 +43,30 @@ void construct_queue(string filename, vector<Process> &processes) {
     }
 }
 
+void pairsort(vector<string> a, vector<int> b) 
+{ 
+    int n = a.size();
+    pair<string, int> pairt[n]; 
+  
+    // Storing the respective array 
+    // elements in pairs. 
+    for (int i = 0; i < n; i++)  
+    { 
+        pairt[i].first = a[i]; 
+        pairt[i].second = b[i]; 
+    } 
+  
+    // Sorting the pair array. 
+    sort(pairt, pairt + n); 
+      
+    // Modifying original arrays 
+    for (int i = 0; i < n; i++)  
+    { 
+        a[i] = pairt[i].first; 
+        b[i] = pairt[i].second; 
+    } 
+} 
+
 class FCFS
 {
     private:
@@ -152,6 +176,7 @@ class RoundRobin
             queue<Process> q;
             int t = 0;
             vector<int> compl_time;
+            vector<string> process_order;
             int quant_rem = quantum_time;
             bool flag = true;
             while(flag) {
@@ -176,6 +201,7 @@ class RoundRobin
                         if(current_execution->burst_time == 0) {
                             quant_rem = quantum_time;
                             compl_time.push_back(t);
+                            process_order.push_back(current_execution->pid);
                             q.pop();
                         }
                     }
@@ -187,7 +213,20 @@ class RoundRobin
                 t += 1;
                 if(compl_time.size() == modified_processes.size()) flag=false;
             }
+            pairsort(process_order, compl_time);
             copy(compl_time.begin(), compl_time.end(), back_inserter(completion_time));
+        }
+
+        void getTurnAroundTime(vector<int> &completion_time, vector<int> &turnaround_time) {
+            for(int i=0; i<completion_time.size(); i++) {
+                turnaround_time.push_back(completion_time[i]-modified_processes[i].arrival_time);
+            }
+        }
+
+        void getWaitingTime(vector<int> &turnaround_time, vector<int> &waiting_time) {
+            for(int i=0; i<turnaround_time.size(); i++) {
+                waiting_time.push_back(turnaround_time[i]-modified_processes[i].burst_time);
+            }
         }
 };
 
@@ -221,6 +260,7 @@ class SJFNP
             vector<Process> q;
             int t = 0;
             vector<int> compl_times;
+            vector<string> process_order;
             bool flag = true;
             while(flag) {
                 t += 1;
@@ -236,13 +276,26 @@ class SJFNP
                     }
                     t += (q.front().burst_time);
                     compl_times.push_back(t);
+                    process_order.push_back(q.front().pid);
                     t -= 1;
                     q.erase(q.begin());
                 }
                 if(compl_times.size() == processes.size()) flag = false;
             }
-            
+            pairsort(process_order, compl_times);
             copy(compl_times.begin(), compl_times.end(), back_inserter(completion_times));
+        }
+
+        void getTurnAroundTime(vector<int> &completion_time, vector<int> &turnaround_time) {
+            for(int i=0; i<completion_time.size(); i++) {
+                turnaround_time.push_back(completion_time[i]-modified_processes[i].arrival_time);
+            }
+        }
+
+        void getWaitingTime(vector<int> &turnaround_time, vector<int> &waiting_time) {
+            for(int i=0; i<turnaround_time.size(); i++) {
+                waiting_time.push_back(turnaround_time[i]-modified_processes[i].burst_time);
+            }
         }
 };
 
@@ -276,6 +329,7 @@ class SJFP
             vector<Process> q;
             int t = 0;
             vector<int> compl_times;
+            vector<string> process_order;
             bool flag = true;
             while(flag) {
                 for(auto p: modified_processes) {
@@ -287,13 +341,27 @@ class SJFP
                     q.front().burst_time -= 1;
                     if(q.front().burst_time == 0) {
                         compl_times.push_back(t+1);
+                        process_order.push_back(q.front().pid);
                         q.erase(q.begin());
                     }
                 }   
                 t += 1;
                 if(compl_times.size() == processes.size()) flag = false;
             }
+            pairsort(process_order, compl_times);
             copy(compl_times.begin(), compl_times.end(), back_inserter(completion_times));
+        }
+
+        void getTurnAroundTime(vector<int> &completion_time, vector<int> &turnaround_time) {
+            for(int i=0; i<completion_time.size(); i++) {
+                turnaround_time.push_back(completion_time[i]-modified_processes[i].arrival_time);
+            }
+        }
+
+        void getWaitingTime(vector<int> &turnaround_time, vector<int> &waiting_time) {
+            for(int i=0; i<turnaround_time.size(); i++) {
+                waiting_time.push_back(turnaround_time[i]-modified_processes[i].burst_time);
+            }
         }
 };
 
