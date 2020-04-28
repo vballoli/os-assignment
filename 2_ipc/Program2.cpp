@@ -2,7 +2,8 @@
 #include <iostream> 
 #include <sys/ipc.h> 
 #include <sys/shm.h> 
-#include <stdio.h> 
+#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 using namespace std; 
   
@@ -21,6 +22,7 @@ int main()
     char *data = (char*) shmat(data_shmid, (void*)0, 0);
     do{
         // Check if the current process to be run is P2.
+        cout.flush();
         if(strcmp(flag, "2") == 0){
             string curData = data;
             // If the data provided is q, then quit the program
