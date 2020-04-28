@@ -2,6 +2,7 @@
 #include <sys/ipc.h> 
 #include <sys/shm.h> 
 #include <stdio.h> 
+#include <string.h>
 using namespace std; 
   
 int main() 
@@ -23,6 +24,7 @@ int main()
 
     cout << "Press \'q\' to quit the program." << endl;
     do{
+        cout.flush();
         // Check if current process to be run is P1 or not.
         while(strcmp(flag, "1") == 0){
             cout << "Enter data to be written: ";
