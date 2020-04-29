@@ -1,0 +1,6 @@
+.vscode/
+*.out
+1_shell/terminal
+2_ipc/P1
+2_ipc/P2
+4_multithreading/multithreading

@@ -20,3 +20,6 @@ g++ terminal.cpp -o terminal -std=c++11 && ./terminal
 
 ```
 The terminal will open and the instructions ensuing will guide the user.
+
+The following is the image of the code working in Ubuntu terminal - 
+![Terminal Image](images/terminal.png)
