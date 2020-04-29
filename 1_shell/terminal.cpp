@@ -130,7 +130,7 @@ int main() {
     std::cin >> ch;
     
     if(ch == 'y') {
-        std::cout << "Starting terminal, enter [quit] to terminate." << std::endl;
+        std::cout << "Starting terminal, enter [exit] to terminate." << std::endl;
         return openterm();
     }
 }
