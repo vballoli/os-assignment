@@ -76,6 +76,7 @@ void median_fn()
 // Function to display all computed statistics which are stored globally
 void display_statistics()
 {
+    cout << endl;
     cout << "The average is " << average << endl;
     cout << "The min element is " << minimum << endl;
     cout << "The max element is " << maximum << endl;

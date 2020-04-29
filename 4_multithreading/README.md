@@ -24,3 +24,12 @@ To verify that each statistical feature is being computed using different thread
 ```
 g++ -std=c++11 -pthread -o multithreading main.cpp && ./multithreading print_pids
 ```
+
+### Outputs:
+There are two outputs for the program. The first picture shows the computed statistical measures.  
+
+![img1](images/1.png)
+
+To verify that the statistical measures were computed using different threads, the PID of each thread is printed before the thread completes execution.
+
+![img2](images/2.png)

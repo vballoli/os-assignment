@@ -8,12 +8,13 @@
 
 ## Run instructions
 
-TO BE UPDATED.
-
 > Assignment
-1. `make`
+1. `bash execute.sh <question_number>`
+   * question_number takes the values `1`, `2`, `3`, and `4`, each of which correspond to the question number in the assignment PDF.
+   * Input `2` for IPC is currently not supported, please find running instructions for question 2 inside its folder - `2_ipc.`
+   * Input `4` takes a second optional argument - `print_pids` which can be used to print the process IDs of the different worker threads in the multithreaded program.
 
-> Docs
+> Docs - TO BE UPDATED.
 1. `doxygen Doxyfile`
 
 ## Documentation guidelines

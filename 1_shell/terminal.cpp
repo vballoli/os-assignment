@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <bits/stdc++.h>           
+#include <vector>          
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -8,6 +8,10 @@
 #include <unistd.h>
 
 using namespace std;
+
+/**
+ * cd() is executed on the main process to to maintain uniformity in all child processes
+ **/
 
 void pwd() {
     char cwd[1024];
@@ -112,11 +116,7 @@ int openterm() {
             }
         }
         if(!(ip.compare("cd"))){
-            int process_cd = fork();
-            if(process_cd == 0){
-                cd();
-                exit(0);
-            }
+            cd();
         }
     } 
     std::cout << "Exiting the terminal." << std::endl; 
