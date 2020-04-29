@@ -438,6 +438,14 @@ class SJFP
         }
 };
 
+void printData(vector<int> &data, string name, string type) {
+    cout<<name<<endl;
+    cout<<type<<endl;
+    for(auto i: data) cout<<i<<" ";
+    cout<<endl;
+    cout<<endl;
+}
+
 
 int main() {
     vector<Process> processes;
@@ -448,18 +456,24 @@ int main() {
     vector<int> turnaround_times(processes.size(), 0);
     f.getWaitingTimes(waiting_times);
     f.getTurnaroundTimes(waiting_times, turnaround_times);
+    printData(waiting_times, "FCFS", "Waiting time");
+    printData(turnaround_times, "FCFS", "Turnaround time");
 
     Priority p(processes);
     vector<int> waiting_times_p(processes.size(), 0);
     vector<int> turnaround_times_p(processes.size(), 0);
     p.getWaitingTimes(waiting_times_p);
     p.getTurnaroundTimes(waiting_times_p, turnaround_times_p);
+    printData(waiting_times_p, "Priority", "Waiting time");
+    printData(turnaround_times_p, "Priority", "Turnaround time");
 
     RoundRobin rr(processes, 2);
     vector<int> completion_time_r, waiting_times_r, turnaround_times_r;
     rr.getCompletionTime(completion_time_r);
     rr.getTurnAroundTime(completion_time_r, turnaround_times_r);
     rr.getWaitingTime(turnaround_times_r, waiting_times_r);
+    printData(waiting_times_r, "Round Robin", "Waiting time");
+    printData(turnaround_times_r, "Round Robin", "Turnaround time");
 
 
     SJFNP snp(processes);
@@ -467,12 +481,16 @@ int main() {
     snp.getCompletionTime(completion_time_np);
     snp.getTurnAroundTime(completion_time_np, turnaround_times_np);
     snp.getWaitingTime(turnaround_times_np, waiting_times_np);
+    printData(waiting_times_np, "SJF Nonpreemtive", "Waiting time");
+    printData(turnaround_times_np, "SJF NonPreemtive", "Turnaround time");
 
     SJFP sp(processes);
     vector<int> completion_time_sp, waiting_times_sp, turnaround_times_sp;
     sp.getCompletionTime(completion_time_sp);
     sp.getTurnAroundTime(completion_time_sp, turnaround_times_sp);
     sp.getWaitingTime(turnaround_times_sp, waiting_times_sp);
+    printData(waiting_times_sp, "SJF Preemptive", "Waiting time");
+    printData(turnaround_times_sp, "SJF Preemptive", "Turnaround time");
 
     ofstream stats;
     stats.open("stats.txt");
