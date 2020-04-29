@@ -10,7 +10,9 @@ Implement scheduling algorithms.
 
 
 ## Run instructions
-`bash run.sh`
+```
+bash run.sh
+```
 
 > Note: `run.sh` must be executed from this folder. 
 

@@ -10,9 +10,9 @@ elif [ "$1" == "2" ]; then
     echo
     echo "----- Executing question 2: Interprocess Communication -----"
     echo
-    cd 2_ipc/
-    g++ -pipe -O2 -std=c++14 Program1.cpp -lm -o P1 && ./P1
-    gnome-terminal -- g++ -pipe -O2 -std=c++14 Program2.cpp -lm -o P2 && ./P2
+    echo "### Question 2 not supported through this execute file ###"
+    echo "### Refer to sub folder '2_ipc' for run instructions ###"
+    echo
 
 elif [ "$1" == "3" ]; then
     echo
