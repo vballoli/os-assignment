@@ -77,6 +77,7 @@ void median_fn()
 void display_statistics()
 {
     cout << endl;
+    cout << "---- The computed statistics are ----" << endl;
     cout << "The average is " << average << endl;
     cout << "The min element is " << minimum << endl;
     cout << "The max element is " << maximum << endl;
@@ -100,6 +101,8 @@ int main(int argc,  char** argv)
     // Display PIDs for the worker threads
     if (argc > 1 && strcmp(argv[1], "print_pids") == 0)
     {
+        cout << endl;
+        cout << "---- The worker thread PIDs are ----" << endl;
         cout << "PID for thread 1 - average: " << t1.get_id() << endl;
         cout << "PID for thread 2 - min: " << t2.get_id() << endl;
         cout << "PID for thread 3 - max: " << t3.get_id() << endl;
