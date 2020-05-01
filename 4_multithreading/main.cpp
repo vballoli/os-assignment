@@ -57,11 +57,11 @@ void standard_deviation()
 {
     float mean = accumulate(nums.begin(), nums.end(), 0) / nums.size();
     float variance=0.0;
-    for (vector<int>::iterator i=nums.begin(); i != nums.end(); ++i)
+    for (int i=0; i<nums.size(); i++)
     {
-        variance += pow(*i - mean, 2);
+        variance += pow(nums[i] - mean, 2);
     }
-    sd = sqrt(variance);
+    sd = sqrt(variance/nums.size());
 }
 
 void median_fn()
