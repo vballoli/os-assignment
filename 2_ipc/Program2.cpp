@@ -58,7 +58,10 @@ int main()
             }
             // Output
             if(isalphaNum) {
-                std::cout << ++wordCount << " , " << number << std::endl;
+                // std::cout << ++wordCount << " , " << number << std::endl;
+                std::cout << "\"" <<curData << "\"" << " has: " << std::endl;
+                std::cout << "words: " << ++wordCount << std::endl;
+                std::cout << "digits: " << number << std::endl;
                 std::cout << std::endl;
             }
             // Set the current process as P1
