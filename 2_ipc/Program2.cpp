@@ -39,30 +39,26 @@ int main()
             // Get the length of the data string
             int dataLen = curData.length();
             
-            // Set alphabet and digit count to 0;
-            int alphabet = 0;
+            // Set word count and digit count to 0;
+            int wordCount = 0;
             int number = 0;
             
-            // Set !alphanum flag = true;
-            int isalphaNum = true;
+            // Set alphanum flag = true;
+            bool isalphaNum = true;
+            bool isSpace = false;
             for(int i = 0; i < dataLen; i++) {
-                if(isalnum(curData[i])) {
-                    // Increment alphabet count if alphabet
-                    if (isalpha(curData[i])) alphabet++;
-                    // Increment number count if digit
-                    if (isdigit(curData[i])) number++;
-                } else {
-                    // Only alphanumeric strings allowed
-                    std::cout << "Please enter only alphanumeric string." << std::endl << std::endl;
-                    isalphaNum = false;
-                    break;
+                if(curData[i] == ' ' || curData[i] == '\n' || curData[i] == '\t') {
+                    isSpace = true;
+                } else if(isSpace) {
+                    isSpace = false;
+                    wordCount++;
                 }
+                
+                if(isdigit(curData[i])) number++;
             }
             // Output
             if(isalphaNum) {
-                std::cout << "\"" <<curData << "\"" << " has: " << std::endl;
-                std::cout << "alphabets: " << alphabet << std::endl;
-                std::cout << "digits: " << number << std::endl;
+                std::cout << ++wordCount << " , " << number << std::endl;
                 std::cout << std::endl;
             }
             // Set the current process as P1

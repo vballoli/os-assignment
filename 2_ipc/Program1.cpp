@@ -29,7 +29,7 @@ int main()
         // Check if current process to be run is P1 or not.
         while(strcmp(flag, "1") == 0){
             cout << "Enter data to be written: ";
-            cin >> data;
+            cin.getline(data, 100);
             std::cout.flush();
             // Set the current process as P2.
             sprintf(flag, "%s", "2");
